@@ -1,12 +1,13 @@
 import React from 'react';
 import './Form.css'
 import {bindActionCreators} from "redux";
-import {addNewItem} from "../../store/actions";
+import {addNewItem, showAlert} from "../../store/actions";
 import {connect} from "react-redux";
+import Alert from '../Alert/Alert'
 
 class Form extends React.Component {
     render() {
-        const {addNewItem} = this.props;
+        const {addNewItem, alert, showAlert} = this.props;
         let name = '';
         let text = '';
         return (
@@ -17,8 +18,12 @@ class Form extends React.Component {
                   name.value = '';
                   text.value = ''
               }
+              else {
+                  showAlert('Cannot be empty')
+              }
 
           }}>
+              {alert && <Alert text={alert} />}
               <input type="text" placeholder="Name" ref={node => name = node} />
               <textarea placeholder="Text" ref={node => text = node} rows="6" />
               <button type="submit">Add</button>
@@ -27,11 +32,18 @@ class Form extends React.Component {
     }
 }
 
-const putActionsToProps = (dispatch) => {
+const mapStateToProps = (state) => {
     return {
-        addNewItem: bindActionCreators(addNewItem, dispatch),
+        alert: state.item.alert
     }
 }
 
-export default connect(null, putActionsToProps)(Form);
+const putActionsToProps = (dispatch) => {
+    return {
+        addNewItem: bindActionCreators(addNewItem, dispatch),
+        showAlert: bindActionCreators(showAlert, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, putActionsToProps)(Form);
 

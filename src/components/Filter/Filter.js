@@ -27,8 +27,8 @@ class Filter extends React.Component {
 
 const putStateToProps = (state) => {
     return {
-        items: state.items,
-        authorName: state.authorName
+        items: state.item.items,
+        authorName: state.item.authorName
     }
 }
 

@@ -5,10 +5,6 @@ import {deleteItem} from "../../store/actions";
 import {connect} from "react-redux";
 
 class BlogItem extends React.Component {
-    constructor(props){
-        super(props);
-    }
-
     render() {
         const {deleteItem} = this.props;
         return (
